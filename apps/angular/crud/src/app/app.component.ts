@@ -7,12 +7,7 @@ import { randText } from '@ngneat/falso';
   standalone: true,
   imports: [CommonModule],
   selector: 'app-root',
-  template: `
-    <div *ngFor="let todo of todos">
-      {{ todo.title }}
-      <button (click)="update(todo)">Update</button>
-    </div>
-  `,
+  templateUrl: 'app.component.html' ,
   styles: [],
 })
 export class AppComponent implements OnInit {

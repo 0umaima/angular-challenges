@@ -1,0 +1,10 @@
+<h1>TO DO LIST</h1>
+<div class="parent">
+    <div  *ngFor="let todo of todos">
+        <div class="one-item">
+                <p class="font-medium text-base"> {{ todo.title }}</p>
+                <button (click)="update(todo)">Update</button>
+        </div>
+    
+    </div>
+</div>
