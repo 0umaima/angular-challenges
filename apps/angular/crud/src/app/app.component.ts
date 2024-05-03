@@ -1,46 +1,43 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { randText } from '@ngneat/falso';
+import { todos } from './model/todos.model';
+import { TodosService } from './service/todos.service';
 
 @Component({
   standalone: true,
   imports: [CommonModule],
   selector: 'app-root',
-  templateUrl: 'app.component.html' ,
+  templateUrl: 'app.component.html',
   styles: [],
 })
 export class AppComponent implements OnInit {
-  todos!: any[];
+  todosList!: todos[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private todoService: TodosService) {}
 
   ngOnInit(): void {
-    this.http
-      .get<any[]>('https://jsonplaceholder.typicode.com/todos')
-      .subscribe((todos) => {
-        this.todos = todos;
-      });
+    this.todoService.getTodos().subscribe({
+      next: (todos) => {
+        this.todosList = todos;
+      },
+      error: (err) => console.error('Failed to update the todo :', err),
+    });
   }
 
-  update(todo: any) {
-    this.http
-      .put<any>(
-        `https://jsonplaceholder.typicode.com/todos/${todo.id}`,
-        JSON.stringify({
-          todo: todo.id,
-          title: randText(),
-          body: todo.body,
-          userId: todo.userId,
-        }),
-        {
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-        },
-      )
-      .subscribe((todoUpdated: any) => {
-        this.todos[todoUpdated.id - 1] = todoUpdated;
-      });
+  update(todo: todos): void {
+    this.todoService.updateTodos(todo).subscribe((todoUpdated) => {
+      this.todosList = this.todosList.map((t) =>
+        t.id === todoUpdated.id ? todoUpdated : t,
+      );
+    });
+  }
+
+  delete(id: number): void {
+    this.todoService.deleteTodos(id).subscribe({
+      next: () => {
+        this.todosList = this.todosList.filter((t) => t.id !== id);
+      },
+      error: (err) => console.error('Failed to delete the todo :', err),
+    });
   }
 }

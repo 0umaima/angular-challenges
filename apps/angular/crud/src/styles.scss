@@ -54,3 +54,24 @@ button{
   border: 0;
   padding: 0.6rem;
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.remove-icon {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background-color: red;
+  color: white;
+  padding: 0.2rem;
+  border-radius: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}

@@ -1,10 +1,16 @@
 <h1>TO DO LIST</h1>
 <div class="parent">
-    <div  *ngFor="let todo of todos">
+    <div *ngFor="let todo of todosList">
         <div class="one-item">
-                <p class="font-medium text-base"> {{ todo.title }}</p>
+            <p class="font-medium text-base"> {{ todo.title }}</p>
+            <div class="actions">
+
                 <button (click)="update(todo)">Update</button>
+                <div class="remove-icon" (click)="delete(todo.id)">
+                    <span>X</span>
+                </div>
+            </div>
         </div>
-    
+
     </div>
 </div>
