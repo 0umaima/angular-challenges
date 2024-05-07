@@ -1,6 +1,8 @@
 <h1>TO DO LIST</h1>
+
+<mat-progress-spinner *ngIf="loadingService.loading()" mode="indeterminate"></mat-progress-spinner>
 <div class="parent">
-    <div *ngFor="let todo of todosList">
+    <div *ngFor="let todo of todosList()">
         <div class="one-item">
             <p class="font-medium text-base"> {{ todo.title }}</p>
             <div class="actions">
